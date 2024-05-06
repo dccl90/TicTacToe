@@ -4,6 +4,18 @@ namespace TicTacToe
     {
         const int ROWS = 3;
         const int COLUMNS = 3;
+
+        public static void FillArray(string [,] positions){
+            int count = 1;
+            for(int i = 0; i < positions.GetLength(0); i++)
+            {
+                for(int j = 0; j < positions.GetLength(1); j++)
+                {  
+                    positions[i,j] = count.ToString();
+                    count++; 
+                }
+            }
+        }       
         public static bool CheckWin(string[,] positions)
         {
             bool win = false;
