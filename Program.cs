@@ -83,10 +83,8 @@ namespace TicTacToe
 
                     //Print the board with the updated positions
                     UserInterface.PrintBoard(positions);
-
                     //Check if there is a winner
-                    win = CheckWin(positions);
-                    
+                    win = GameLogic.CheckWin(positions);
                     //If there is a winner print the winner message
                     if(win)
                     {
@@ -117,96 +115,6 @@ namespace TicTacToe
                     count++; 
                 }
             }
-        }
-        
-        //Private method for checking if there is a winner
-        private static bool CheckWin(string[,] positions)
-        {
-            int rowWinCheck;
-            int columnWinCheck;
-            int diagonalWinCheck;
-            bool win = false;
-            
-            //Check horizontal win
-            if(!win) {
-                for(int row = 0; row < ROWS; row++)
-                {   
-                    rowWinCheck = 0; 
-                    for(int column = 0; column < COLUMNS; column++)
-                    {  
-                        if(positions[row,0] == positions[row,column])
-                        {
-                            rowWinCheck++;
-                        }
-                    }
-
-                    if(rowWinCheck == ROWS)
-                    {
-                        win = true;
-                    }     
-                }
-            }
-
-            //Check vertical win
-            if(!win)
-            {
-                for(int row = 0; row < ROWS; row++)
-                {   
-                    columnWinCheck = 0;
-                    for(int column = 0; column < COLUMNS; column++)
-                    {
-                        if(positions[0, row] == positions[column,row])
-                        {
-                            columnWinCheck++;       
-                        }
-                    }
-
-                    if(columnWinCheck == COLUMNS)
-                    {
-                        win = true;
-                    }
-                }
-            }
-
-            //Check diagonal win left to right
-            if(!win)
-            {
-                diagonalWinCheck = 0;
-                for(int row = 0; row < ROWS; row++)
-                {
-                
-                    if(positions[0, 0] == positions[row,row]) 
-                    {
-                        diagonalWinCheck++;
-                    }
-                        
-                    if(diagonalWinCheck == ROWS)
-                    {
-                        win = true;
-                    }              
-                }
-
-            }
-
-            //Check diagonal win right to left
-            if(!win)
-            {
-                diagonalWinCheck = 0;
-                for(int row = 0; row < ROWS; row++)
-                {
-                    if(positions[0, COLUMNS - 1] == positions[row,COLUMNS - 1 - row]) 
-                    {
-                        diagonalWinCheck++;
-                    }
-                        
-                    if(diagonalWinCheck == ROWS)
-                    {
-                        win = true;
-                    }          
-                }
-            }
-      
-            return win;
-        }
+        }        
     }
 }
