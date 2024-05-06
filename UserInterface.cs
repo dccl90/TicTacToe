@@ -2,10 +2,10 @@ namespace TicTacToe
 {
     public static class UserInterface
     {
-        public static void PrintBoard(string[,] positions)
+        public static void PrintBoard(string[,] positions, string playerOne, string computer)
         {
             ClearUserInterface();
-            PrintHeader();
+            PrintHeader(playerOne, computer);
             for(int i = 0; i < positions.GetLength(0); i++)
             {
                 for(int j = 0; j < positions.GetLength(1); j++)
@@ -49,9 +49,9 @@ namespace TicTacToe
             }
         }
 
-        private static void PrintHeader()
+        private static void PrintHeader(string playerOne, string computer)
         {
-            Console.WriteLine("Player1:O and Computer:X");
+            Console.WriteLine($"Player1:{playerOne} and Computer:{computer}");
             Console.WriteLine();
         }
 

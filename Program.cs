@@ -28,7 +28,7 @@ namespace TicTacToe
             GameLogic.FillArray(positions);
             do {
                 // Print the board
-                UserInterface.PrintBoard(positions);
+                UserInterface.PrintBoard(positions, INPUT_O, INPUT_X);
                 //If isComputer is true, generate a guess for the computer else the user inputs their position
                 if(isComputer)
                 {
@@ -82,7 +82,7 @@ namespace TicTacToe
                 }
 
                 //Print the board with the updated positions
-                UserInterface.PrintBoard(positions);
+                UserInterface.PrintBoard(positions, INPUT_O, INPUT_X);
                 //Check if there is a winner
                 win = GameLogic.CheckWin(positions);
                 //If there is a winner print the winner message
