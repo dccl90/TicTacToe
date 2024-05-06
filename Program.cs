@@ -13,8 +13,10 @@ namespace TicTacToe
         const int MIN_INPUT = 1;
         const string INPUT_O = "O";
         const string INPUT_X = "X";
+        
         static void Main(string[] args)
         {
+            Random rnd = new Random();
             string[,] positions = new string[ROWS,COLUMNS];
             List<String> previousInputs = new List<String>();
             string position;
@@ -30,7 +32,7 @@ namespace TicTacToe
                     //If isComputer is true, generate a guess for the computer else the user inputs their position
                     if(isComputer)
                     {
-                        position = ComputerGuess();
+                        position = GameLogic.ComputerGuess(rnd, RANGE_START, RANGE_END);
                     }
                     else
                     {
@@ -51,7 +53,7 @@ namespace TicTacToe
                     if(previousInputs.Exists(x => x.Equals(position)))
                     {
                         //If isComputer equals false print a message stating the position is already filled 
-                        if(isComputer)
+                        if(!isComputer)
                         {
                             UserInterface.PositionFilledMessage();
                         }      
@@ -104,14 +106,6 @@ namespace TicTacToe
 
                 } while(!win);
         }
-
-        //Private method for generating the computers guess
-        private static string ComputerGuess(){
-            Random rnd = new Random();
-            string position = rnd.Next(RANGE_START,RANGE_END).ToString();
-            return position;
-        }
-
         //Private method for filling the array
         private static void FillArray(string [,] positions){
             int count = 1;
