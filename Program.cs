@@ -5,52 +5,44 @@ namespace TicTacToe
     
     class Program
     {
-        const int ROWS = 3;
-        const int RANGE_START = 1;
-        const int RANGE_END = 10;
-        const int COLUMNS = 3;
-        const int MAX_INPUT = 9;
-        const int MIN_INPUT = 1;
-        const string INPUT_O = "O";
-        const string INPUT_X = "X";
-        
         static void Main(string[] args)
         {
-            Random rnd = new Random();
-            string[,] positions = new string[ROWS,COLUMNS];
-            List<String> previousInputs = new List<String>();
+            
+            string[,] positions = GameLogic.GetPositions();
+            string playerOne = GameLogic.GetPlayerOne();
+            string computer = GameLogic.GetComputer();
             string position;
-            bool isComputer = false;
             bool win = false;     
-            bool isInputInt = false;
                 
             //Fill array to populate the board positions
             GameLogic.FillArray(positions);
             do {
                 // Print the board
-                UserInterface.PrintBoard(positions, INPUT_O, INPUT_X);
+                bool isComputer = GameLogic.IsComputer();
+                UserInterface.PrintBoard(positions, playerOne, computer);
                 //If isComputer is true, generate a guess for the computer else the user inputs their position
                 if(isComputer)
                 {
-                    position = GameLogic.ComputerGuess(rnd, RANGE_START, RANGE_END);
+                    position = GameLogic.ComputerGuess();
                 }
                 else
                 {
                     position = UserInterface.SetPosition();    
                 }
                 
-                //Validate the input can be parsed to an int
-                isInputInt = int.TryParse(position, out int input);
-
-                //Validate the input is an int and within the acceptable range
-                if(!isInputInt || input < MIN_INPUT || input > MAX_INPUT)
+                //Check if user input is valid
+                bool isInputValid = GameLogic.IsInputValid(position);
+                //If input is invalid then print the invalid message 
+                if(!isInputValid)
                 {
                     UserInterface.InvalidPositionMessage();
                     continue;
                 }
                 
-                // If the position exists in the previous inputs continue
-                if(previousInputs.Exists(x => x.Equals(position)))
+                //Check is board position is available
+                bool isPositionAvailable = GameLogic.CheckPosition(position);
+                // If the position is not available print the Position filled message and continue loop
+                if(!isPositionAvailable)
                 {
                     //If isComputer equals false print a message stating the position is already filled 
                     if(!isComputer)
@@ -60,47 +52,22 @@ namespace TicTacToe
                     continue;
                 }
 
-                //Store the position in the previousInputs list
-                previousInputs.Add(position);
-
-                //Loop over the positions array and update the value with an X or O
-                for(int i = 0; i < positions.GetLength(0); i++)
-                {
-                    for(int j = 0; j < positions.GetLength(1); j++)
-                    {  
-                        if(position == positions[i,j])
-                        {
-                            if(isComputer){
-                                positions[i,j] = INPUT_X;
-                            }
-                            else
-                            {
-                                positions[i,j] = INPUT_O;
-                            }
-                        }
-                    }
-                }
+                //Update the position on the board
+                GameLogic.UpdatePosition(position);
 
                 //Print the board with the updated positions
-                UserInterface.PrintBoard(positions, INPUT_O, INPUT_X);
+                UserInterface.PrintBoard(positions, playerOne, computer);
+                
                 //Check if there is a winner
-                win = GameLogic.CheckWin(positions);
+                win = GameLogic.CheckWin();
                 //If there is a winner print the winner message
                 if(win)
                 {
                     UserInterface.PrintWinner(isComputer);
                 }
                 
-                //Switch between the computer and player one
-                if(isComputer) 
-                {
-                    isComputer = false;
-                } 
-                else 
-                {
-                    isComputer = true;
-                }
-
+                //Set computers turn
+                GameLogic.SetIsComputer();
 
             } while(!win);
         }      

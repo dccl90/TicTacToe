@@ -1,10 +1,53 @@
+using System.IO.Compression;
+
 namespace TicTacToe
 {
     public class GameLogic
     {
         const int ROWS = 3;
         const int COLUMNS = 3;
+        const int MAX_INPUT = 9;
+        const int MIN_INPUT = 1;
+        const string INPUT_O = "O";
+        const string INPUT_X = "X";
+        const int RANGE_START = 1;
+        const int RANGE_END = 10;
+        static string[,] positions = new string[ROWS,COLUMNS];
+        static bool isComputer = false;
+        static Random rnd = new Random();
 
+        
+        public static string[,] GetPositions()
+        {
+            return positions;
+        }
+
+        public static string GetPlayerOne()
+        {
+            return INPUT_O;
+        }
+
+        public static string GetComputer()
+        {
+            return INPUT_X;
+        }
+
+        public static bool IsComputer()
+        {
+            return isComputer;
+        }
+
+        public static void SetIsComputer()
+        {
+            if(isComputer) 
+            {
+                isComputer = false;
+            } 
+            else 
+            {
+                isComputer = true;
+            }
+        }
         public static void FillArray(string [,] positions){
             int count = 1;
             for(int i = 0; i < positions.GetLength(0); i++)
@@ -15,38 +58,92 @@ namespace TicTacToe
                     count++; 
                 }
             }
-        }       
-        public static bool CheckWin(string[,] positions)
+        }  
+
+        //Method for generating the computers guess
+        public static string ComputerGuess(){
+            string position = rnd.Next(RANGE_START, RANGE_END).ToString();
+            return position;
+        }  
+
+        //Method for validating user input
+        public static bool IsInputValid(string position)
+        {
+            bool isInputValid = false;
+            bool isInputInt = int.TryParse(position, out int input);
+            //Validate the input is an int and within the acceptable range
+            if(isInputInt || input >= MIN_INPUT || input <= MAX_INPUT)
+            {
+                isInputValid = true;
+            }
+
+            return isInputValid;
+        }
+
+        //Method for checking the if the position on the board is available
+        public static bool CheckPosition(string position)
+        {
+            bool isPositionAvailable = false;
+            foreach(string pos in positions)
+            {
+                if(pos == position)
+                {
+                    isPositionAvailable = true;
+                    break;
+                }
+            }    
+            return isPositionAvailable;
+        }   
+
+        //Method for updating the position
+        public static void UpdatePosition(string position)
+        {
+            for(int i = 0; i < positions.GetLength(0); i++)
+            {
+                for(int j = 0; j < positions.GetLength(1); j++)
+                {  
+                    if(position == positions[i,j])
+                    {
+                        if(isComputer)
+                        {
+                            positions[i,j] = INPUT_X;
+                        }
+                        else
+                        {
+                            positions[i,j] = INPUT_O;
+                        }
+                    }
+                }
+            }
+        }
+
+        //Method for checking if there is a winner
+        public static bool CheckWin()
         {
             bool win = false;
 
             //Check horizontal win
             if(!win) {
-                win = CheckHorizontalWin(positions);
+                win = CheckHorizontalWin();
             }
 
             //Check vertical win
             if(!win)
             {
-                win = CheckVerticalWin(positions);
+                win = CheckVerticalWin();
             }
 
             //Check diagonal win left to right
             if(!win)
             {
-                win = CheckDiagonalWin(positions);
+                win = CheckDiagonalWin();
             }
             
             return win;
         }
-        
-        //Private method for generating the computers guess
-        public static string ComputerGuess(Random rnd, int rangeStart, int rangeEnd){
-            string position = rnd.Next(rangeStart,rangeEnd).ToString();
-            return position;
-        }
 
-        private static bool CheckHorizontalWin(string[,] positions)
+        //Private methods for checkinf if there is a winner in any direction
+        private static bool CheckHorizontalWin()
         {
             int rowWinCheck;
             bool win = false;
@@ -69,7 +166,7 @@ namespace TicTacToe
             return win;
         }
 
-        private static bool CheckVerticalWin(string[,] positions)
+        private static bool CheckVerticalWin()
         {   
             int columnWinCheck;
             bool win = false;
@@ -93,7 +190,7 @@ namespace TicTacToe
             return win;
         }
 
-        private static bool CheckDiagonalWin(string[,] positions)
+        private static bool CheckDiagonalWin()
         {
             int diagonalWinCheck = 0;
             bool win = false;
