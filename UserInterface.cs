@@ -24,9 +24,9 @@ namespace TicTacToe
             return position;
         }
 
-        public static void InvalidPositionMessage()
+        public static void InvalidPositionMessage(int minPosition, int maxPosition)
         {
-            Console.WriteLine("Enter a valid number between 1 and 9");
+            Console.WriteLine($"Enter a valid number between {minPosition} and {maxPosition}");
             Console.WriteLine("Press Any Key to Continue");
             Console.ReadLine();
         }
@@ -35,6 +35,11 @@ namespace TicTacToe
             Console.WriteLine("Position has already been filled");
             Console.WriteLine("Press Any Key to Continue");
             Console.ReadLine();
+        }
+
+        public static void BoardIsFullMessage()
+        {
+            Console.WriteLine("No Winner! The Board is Full");
         }
 
         public static void PrintWinner(bool isComputer)

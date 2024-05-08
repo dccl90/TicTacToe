@@ -11,8 +11,11 @@ namespace TicTacToe
             string[,] positions = GameLogic.GetPositions();
             string playerOne = GameLogic.GetPlayerOne();
             string computer = GameLogic.GetComputer();
+            int minPosition = GameLogic.GetMinPosition();
+            int maxPosition = GameLogic.GetMaxPosition();
             string position;
-            bool win = false;     
+            bool win = false; 
+            bool isBoardFull = false;    
                 
             //Fill array to populate the board positions
             GameLogic.FillArray(positions);
@@ -35,7 +38,7 @@ namespace TicTacToe
                 //If input is invalid then print the invalid message 
                 if(!isInputValid)
                 {
-                    UserInterface.InvalidPositionMessage();
+                    UserInterface.InvalidPositionMessage(minPosition, maxPosition);
                     continue;
                 }
                 
@@ -57,13 +60,22 @@ namespace TicTacToe
 
                 //Print the board with the updated positions
                 UserInterface.PrintBoard(positions, playerOne, computer);
-                
+
                 //Check if there is a winner
                 win = GameLogic.CheckWin();
                 //If there is a winner print the winner message
                 if(win)
                 {
                     UserInterface.PrintWinner(isComputer);
+                }
+                
+                // Check if board is Full
+                isBoardFull = GameLogic.IsBoardFull();
+                //If board is full and there is no winner print Board is Full message
+                if(isBoardFull && !win)
+                {
+                    UserInterface.BoardIsFullMessage();
+                    break;
                 }
                 
                 //Set computers turn

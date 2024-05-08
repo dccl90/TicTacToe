@@ -15,8 +15,6 @@ namespace TicTacToe
         static string[,] positions = new string[ROWS,COLUMNS];
         static bool isComputer = false;
         static Random rnd = new Random();
-
-        
         public static string[,] GetPositions()
         {
             return positions;
@@ -30,6 +28,16 @@ namespace TicTacToe
         public static string GetComputer()
         {
             return INPUT_X;
+        }
+
+        public static int GetMinPosition()
+        {
+            return MIN_INPUT;
+        }
+
+        public static int GetMaxPosition()
+        {
+            return MAX_INPUT;
         }
 
         public static bool IsComputer()
@@ -115,6 +123,26 @@ namespace TicTacToe
                     }
                 }
             }
+        }
+
+        public static bool IsBoardFull()
+        {
+            int count = 0;
+            bool isBoardFull = false;
+            foreach(string position in positions)
+            {
+                if(position == INPUT_O || position == INPUT_X)
+                {
+                    count++;
+                }
+
+                if(count == 9)
+                {
+                    isBoardFull = true;
+                }
+            }
+
+            return isBoardFull;
         }
 
         //Method for checking if there is a winner
