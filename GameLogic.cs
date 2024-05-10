@@ -4,40 +4,13 @@ namespace TicTacToe
 {
     public class GameLogic
     {
-        const int ROWS = 3;
-        const int COLUMNS = 3;
-        const int MAX_INPUT = 9;
-        const int MIN_INPUT = 1;
-        const string INPUT_O = "O";
-        const string INPUT_X = "X";
-        const int RANGE_START = 1;
-        const int RANGE_END = 10;
-        static string[,] positions = new string[ROWS,COLUMNS];
+        
+        static string[,] positions = new string[Constants.ROWS,Constants.COLUMNS];
         static bool isComputer = false;
         static Random rnd = new Random();
         public static string[,] GetPositions()
         {
             return positions;
-        }
-
-        public static string GetPlayerOne()
-        {
-            return INPUT_O;
-        }
-
-        public static string GetComputer()
-        {
-            return INPUT_X;
-        }
-
-        public static int GetMinPosition()
-        {
-            return MIN_INPUT;
-        }
-
-        public static int GetMaxPosition()
-        {
-            return MAX_INPUT;
         }
 
         public static bool IsComputer()
@@ -70,7 +43,7 @@ namespace TicTacToe
 
         //Method for generating the computers guess
         public static string ComputerGuess(){
-            string position = rnd.Next(RANGE_START, RANGE_END).ToString();
+            string position = rnd.Next(Constants.RANGE_START, Constants.RANGE_END).ToString();
             return position;
         }  
 
@@ -80,7 +53,7 @@ namespace TicTacToe
             bool isInputValid = false;
             bool isInputInt = int.TryParse(position, out int input);
             //Validate the input is an int and within the acceptable range
-            if(isInputInt || input >= MIN_INPUT || input <= MAX_INPUT)
+            if(isInputInt && input >= Constants.MIN_INPUT && input <= Constants.MAX_INPUT)
             {
                 isInputValid = true;
             }
@@ -114,11 +87,11 @@ namespace TicTacToe
                     {
                         if(isComputer)
                         {
-                            positions[i,j] = INPUT_X;
+                            positions[i,j] = Constants.INPUT_X;
                         }
                         else
                         {
-                            positions[i,j] = INPUT_O;
+                            positions[i,j] = Constants.INPUT_O;
                         }
                     }
                 }
@@ -131,7 +104,7 @@ namespace TicTacToe
             bool isBoardFull = false;
             foreach(string position in positions)
             {
-                if(position == INPUT_O || position == INPUT_X)
+                if(position == Constants.INPUT_O || position == Constants.INPUT_X)
                 {
                     count++;
                 }
@@ -175,10 +148,10 @@ namespace TicTacToe
         {
             int rowWinCheck;
             bool win = false;
-            for(int row = 0; row < ROWS; row++)
+            for(int row = 0; row < Constants.ROWS; row++)
             {   
                 rowWinCheck = 0; 
-                for(int column = 0; column < COLUMNS; column++)
+                for(int column = 0; column < Constants.COLUMNS; column++)
                 {  
                     if(positions[row,0] == positions[row,column])
                     {
@@ -186,7 +159,7 @@ namespace TicTacToe
                     }
                 }
 
-                if(rowWinCheck == ROWS)
+                if(rowWinCheck == Constants.ROWS)
                 {
                     win = true;
                 }     
@@ -199,10 +172,10 @@ namespace TicTacToe
             int columnWinCheck;
             bool win = false;
 
-            for(int row = 0; row < ROWS; row++)
+            for(int row = 0; row < Constants.ROWS; row++)
             {   
                 columnWinCheck = 0;
-                for(int column = 0; column < COLUMNS; column++)
+                for(int column = 0; column < Constants.COLUMNS; column++)
                 {
                     if(positions[0, row] == positions[column,row])
                     {
@@ -210,7 +183,7 @@ namespace TicTacToe
                     }
                 }
 
-                if(columnWinCheck == COLUMNS)
+                if(columnWinCheck == Constants.COLUMNS)
                 {
                     win = true;
                 }
@@ -222,14 +195,14 @@ namespace TicTacToe
         {
             int diagonalWinCheck = 0;
             bool win = false;
-            for(int row = 0; row < ROWS; row++)
+            for(int row = 0; row < Constants.ROWS; row++)
             {
                 if(positions[0, 0] == positions[row,row]) 
                 {
                     diagonalWinCheck++;
                 }
                     
-                if(diagonalWinCheck == ROWS)
+                if(diagonalWinCheck == Constants.ROWS)
                 {
                     win = true;
                     return win;
@@ -237,14 +210,14 @@ namespace TicTacToe
             }
 
             diagonalWinCheck = 0;
-            for(int row = 0; row < ROWS; row++)
+            for(int row = 0; row < Constants.ROWS; row++)
             {
-                if(positions[0, COLUMNS - 1] == positions[row,COLUMNS - 1 - row]) 
+                if(positions[0, Constants.COLUMNS - 1] == positions[row, Constants.COLUMNS - 1 - row]) 
                 {
                     diagonalWinCheck++;
                 }
                     
-                if(diagonalWinCheck == ROWS)
+                if(diagonalWinCheck == Constants.ROWS)
                 {
                     win = true;
                 }          

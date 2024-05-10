@@ -2,10 +2,10 @@ namespace TicTacToe
 {
     public static class UserInterface
     {
-        public static void PrintBoard(string[,] positions, string playerOne, string computer)
+        public static void PrintBoard(string[,] positions)
         {
             ClearUserInterface();
-            PrintHeader(playerOne, computer);
+            PrintHeader(Constants.INPUT_O, Constants.INPUT_X);
             for(int i = 0; i < positions.GetLength(0); i++)
             {
                 for(int j = 0; j < positions.GetLength(1); j++)
@@ -24,9 +24,9 @@ namespace TicTacToe
             return position;
         }
 
-        public static void InvalidPositionMessage(int minPosition, int maxPosition)
+        public static void InvalidPositionMessage()
         {
-            Console.WriteLine($"Enter a valid number between {minPosition} and {maxPosition}");
+            Console.WriteLine($"Enter a valid number between {Constants.MIN_INPUT} and {Constants.MAX_INPUT}");
             Console.WriteLine("Press Any Key to Continue");
             Console.ReadLine();
         }
