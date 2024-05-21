@@ -7,7 +7,9 @@ namespace TicTacToe
     {
         static void Main(string[] args)
         {
-            Game.Start();
+            
+            GameLogic.Start();
+            GameLogic.Play();
         }      
     }
 }
