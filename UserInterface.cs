@@ -50,16 +50,19 @@ namespace TicTacToe
             Console.WriteLine("No Winner! The Board is Full");
         }
 
-        public static void PrintWinner(bool isComputer)
+        public static void PrintWinner(bool isComputer, bool win)
         {
-            if(isComputer)
+            if(win)
             {
-                Console.WriteLine("Computer wins");
-            }
-            else 
-            {
-                Console.WriteLine("Player One Wins");
-            }
+                if(isComputer)
+                {
+                    Console.WriteLine("Computer wins");
+                }
+                else 
+                {
+                    Console.WriteLine("Player One Wins");
+                }
+            }   
         }
 
         private static void PrintHeader(string playerOne, string computer)
@@ -116,10 +119,8 @@ namespace TicTacToe
                 //Check if there is a winner
                 win = GameLogic.CheckWin();
                 //If there is a winner print the winner message
-                if(win)
-                {
-                    PrintWinner(isComputer);
-                }
+                PrintWinner(isComputer, win);
+
                 
                 // Check if board is Full
                 bool isBoardFull = GameLogic.IsBoardFull();
