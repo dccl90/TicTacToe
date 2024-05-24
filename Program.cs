@@ -7,9 +7,9 @@ namespace TicTacToe
     {
         static void Main(string[] args)
         {
-            
-            GameLogic.Start();
-            GameLogic.Play();
+            string[,] positions = GameLogic.GetPositions();
+            GameLogic.InitGameBoard();
+            UserInterface.PlayGame(positions);
         }      
     }
 }

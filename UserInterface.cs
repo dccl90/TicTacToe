@@ -16,11 +16,19 @@ namespace TicTacToe
             }
         }
 
-        public static string SetPosition()
+        public static string SetPosition(bool isComputer)
         {   
             string position;
-            Console.Write("Enter Your Position: ");
-            position = Console.ReadLine();
+            if(isComputer)
+            {
+               position = GameLogic.ComputerGuess();
+            }
+            else
+            {
+                Console.Write("Enter Your Position: ");
+                position = Console.ReadLine();
+            }
+            
             return position;
         }
 
@@ -63,6 +71,69 @@ namespace TicTacToe
         private static void ClearUserInterface()
         {
             Console.Clear();
+        }
+
+        public static void PlayGame(string[,] positions)
+        {
+            string position;
+            bool win = false;    
+            
+            do{
+                PrintBoard(positions);
+                bool isComputer = GameLogic.IsComputer();
+                //If isComputer is true, generate a guess for the computer else the user inputs their position
+                //position = GameLogic.ComputerGuess();
+                position = SetPosition(isComputer);
+                
+                //Check if user input is valid
+                bool isInputValid = GameLogic.IsInputValid(position);
+                //If input is invalid then print the invalid message 
+                if(!isInputValid)
+                {
+                    InvalidPositionMessage();
+                    continue;
+                }
+                
+                //Check is board position is available
+                bool isPositionAvailable = GameLogic.CheckPosition(position);
+                // If the position is not available print the Position filled message and continue loop
+                if(!isPositionAvailable)
+                {
+                    //If isComputer equals false print a message stating the position is already filled 
+                    if(!isComputer)
+                    {
+                        PositionFilledMessage();
+                    }  
+                    continue;    
+                }
+
+                //Update the position on the board
+                GameLogic.UpdatePosition(position);
+
+                //Print the board with the updated positions
+                PrintBoard(positions);
+
+                //Check if there is a winner
+                win = GameLogic.CheckWin();
+                //If there is a winner print the winner message
+                if(win)
+                {
+                    PrintWinner(isComputer);
+                }
+                
+                // Check if board is Full
+                bool isBoardFull = GameLogic.IsBoardFull();
+                //If board is full and there is no winner print Board is Full message
+                if(isBoardFull && !win)
+                {
+                    BoardIsFullMessage();
+                    break;
+                }
+                
+                //Set computers turn
+                GameLogic.SetIsComputer();
+            }
+            while(!win);
         }
     }
 }
