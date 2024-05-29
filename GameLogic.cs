@@ -8,16 +8,28 @@ namespace TicTacToe
         static string[,] positions = new string[Constants.ROWS,Constants.COLUMNS];
         static bool isComputer = false;
         static Random rnd = new Random();
+
+        /// <summary>
+        /// Fetch the positions
+        /// </summary>
+        /// <returns>A string array of poisitions</returns>
         public static string[,] GetPositions()
         {
             return positions;
         }
 
+        /// <summary>
+        /// Checks if it is the computers turn
+        /// </summary>
+        /// <returns>A boolean indicating if it is the computers turn</returns>
         public static bool IsComputer()
         {
             return isComputer;
         }
 
+        /// <summary>
+        /// Sets the isComputer boolean when it's the computers turn
+        /// </summary>
         public static void SetIsComputer()
         {
             if(isComputer) 
@@ -29,6 +41,20 @@ namespace TicTacToe
                 isComputer = true;
             }
         }
+
+        /// <summary>
+        /// Initialises the array to fill the game board.
+        /// </summary>
+        public static void InitGameBoard()
+        {
+            string[,] positions = GetPositions();
+            FillArray(positions);
+        } 
+        
+        /// <summary>
+        /// Fills the positions on the board
+        /// </summary>
+        /// <param name="positions">A string array to store the positions</param>
         public static void FillArray(string [,] positions){
             int count = 1;
             for(int i = 0; i < positions.GetLength(0); i++)
@@ -41,14 +67,21 @@ namespace TicTacToe
             }
         }  
 
-        //Method for generating the computers guess
+        /// <summary>
+        /// Method for generating the computers guess
+        /// </summary>
+        /// <returns>The position the computer selected on the board</returns>
         public static string ComputerGuess()
         {
             string position = rnd.Next(Constants.RANGE_START, Constants.RANGE_END).ToString();
             return position;
         } 
 
-        //Method for validating user input
+        /// <summary>
+        /// Checks if the position being input is valid
+        /// </summary>
+        /// <param name="position">The array of positions</param>
+        /// <returns>If the position input is valid</returns>
         public static bool IsInputValid(string position)
         {
             bool isInputValid = false;
@@ -62,7 +95,11 @@ namespace TicTacToe
             return isInputValid;
         }
 
-        //Method for checking the if the position on the board is available
+        /// <summary>
+        /// Checks if the position input is availble
+        /// </summary>
+        /// <param name="position">The array of positions on the board</param>
+        /// <returns>If the position input is available</returns>
         public static bool CheckPosition(string position)
         {
             bool isPositionAvailable = false;
@@ -77,7 +114,10 @@ namespace TicTacToe
             return isPositionAvailable;
         }   
 
-        //Method for updating the position
+        /// <summary>
+        /// Updates the position on the board as input by the user or computer
+        /// </summary>
+        /// <param name="position">The position input by the user or computer</param>
         public static void UpdatePosition(string position)
         {
             for(int i = 0; i < positions.GetLength(0); i++)
@@ -99,6 +139,10 @@ namespace TicTacToe
             }
         }
 
+        /// <summary>
+        /// A method to check if the board is full
+        /// </summary>
+        /// <returns>If the board is full</returns>
         public static bool IsBoardFull()
         {
             int count = 0;
@@ -119,7 +163,10 @@ namespace TicTacToe
             return isBoardFull;
         }
 
-        //Method for checking if there is a winner
+        /// <summary>
+        /// Check is the game has a winner
+        /// </summary>
+        /// <returns>A boolean indicating if the game has been won</returns>
         public static bool CheckWin()
         {
             bool win = false;
@@ -144,7 +191,10 @@ namespace TicTacToe
             return win;
         }
 
-        //Private methods for checkinf if there is a winner in any direction
+        /// <summary>
+        /// A private method that checks if there are three horizontal matches
+        /// </summary>
+        /// <returns>A boolean indicating there were three horizontal matches</returns>
         private static bool CheckHorizontalWin()
         {
             int rowWinCheck;
@@ -168,6 +218,10 @@ namespace TicTacToe
             return win;
         }
 
+        /// <summary>
+        /// A private method that checks if there are three vertical matches
+        /// </summary>
+        /// <returns>A boolean indicating there were three vertical matches</returns>
         private static bool CheckVerticalWin()
         {   
             int columnWinCheck;
@@ -192,6 +246,10 @@ namespace TicTacToe
             return win;
         }
 
+        /// <summary>
+        /// A private method that checks if there are three diagonal matches
+        /// </summary>
+        /// <returns>A boolean indicating there were three diagonal matches</returns>
         private static bool CheckDiagonalWin()
         {
             int diagonalWinCheck = 0;
@@ -205,8 +263,7 @@ namespace TicTacToe
                     
                 if(diagonalWinCheck == Constants.ROWS)
                 {
-                    win = true;
-                    return win;
+                    return true;
                 }              
             }
 
@@ -225,13 +282,6 @@ namespace TicTacToe
             }
             return win;
         }
-
-        public static void InitGameBoard()
-        {
-            string[,] positions = GetPositions();
-            FillArray(positions);
-        } 
-
         
     }
 }

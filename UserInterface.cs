@@ -2,6 +2,10 @@ namespace TicTacToe
 {
     public static class UserInterface
     {
+        /// <summary>
+        /// Prints the game board to the screen
+        /// </summary>
+        /// <param name="positions"></param>
         public static void PrintBoard(string[,] positions)
         {
             ClearUserInterface();
@@ -16,6 +20,11 @@ namespace TicTacToe
             }
         }
 
+        /// <summary>
+        /// Sets the player or computer position on the game board
+        /// </summary>
+        /// <param name="isComputer">Used to track if the player or computer is setting the position</param>
+        /// <returns></returns>
         public static string SetPosition(bool isComputer)
         {   
             string position;
@@ -32,24 +41,39 @@ namespace TicTacToe
             return position;
         }
 
-        public static void InvalidPositionMessage()
+        /// <summary>
+        /// Prints a message indicating the position being set is invalid
+        /// </summary>
+        public static void PrintInvalidPositionMessage()
         {
             Console.WriteLine($"Enter a valid number between {Constants.MIN_INPUT} and {Constants.MAX_INPUT}");
             Console.WriteLine("Press Any Key to Continue");
             Console.ReadLine();
         }
-        public static void PositionFilledMessage()
+
+        /// <summary>
+        /// Prints a message indicating the the position has already been filled
+        /// </summary>
+        public static void PrintPositionFilledMessage()
         {
             Console.WriteLine("Position has already been filled");
             Console.WriteLine("Press Any Key to Continue");
             Console.ReadLine();
         }
 
-        public static void BoardIsFullMessage()
+        /// <summary>
+        /// Prints a message indicating the board is full
+        /// </summary>
+        public static void PrintBoardIsFullMessage()
         {
             Console.WriteLine("No Winner! The Board is Full");
         }
 
+        /// <summary>
+        /// Prints the winner a message indicating the winner of the game
+        /// </summary>
+        /// <param name="isComputer">Track if the computer or player won</param>
+        /// <param name="win">Tracks if the game has been won</param>
         public static void PrintWinner(bool isComputer, bool win)
         {
             if(win)
@@ -65,17 +89,29 @@ namespace TicTacToe
             }   
         }
 
+        /// <summary>
+        /// Used to print the header indicating the player and computer
+        /// </summary>
+        /// <param name="playerOne">Indicates player one</param>
+        /// <param name="computer">Indicates the computer</param>
         private static void PrintHeader(string playerOne, string computer)
         {
             Console.WriteLine($"Player1:{playerOne} and Computer:{computer}");
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Clears the user interface
+        /// </summary>
         private static void ClearUserInterface()
         {
             Console.Clear();
         }
 
+        /// <summary>
+        /// Starts the game loop
+        /// </summary>
+        /// <param name="positions">Array of strings with the boards positions</param>
         public static void PlayGame(string[,] positions)
         {
             string position;
@@ -93,7 +129,7 @@ namespace TicTacToe
                 //If input is invalid then print the invalid message 
                 if(!isInputValid)
                 {
-                    InvalidPositionMessage();
+                    PrintInvalidPositionMessage();
                     continue;
                 }
                 
@@ -105,7 +141,7 @@ namespace TicTacToe
                     //If isComputer equals false print a message stating the position is already filled 
                     if(!isComputer)
                     {
-                        PositionFilledMessage();
+                        PrintPositionFilledMessage();
                     }  
                     continue;    
                 }
@@ -127,7 +163,7 @@ namespace TicTacToe
                 //If board is full and there is no winner print Board is Full message
                 if(isBoardFull && !win)
                 {
-                    BoardIsFullMessage();
+                    PrintBoardIsFullMessage();
                     break;
                 }
                 
